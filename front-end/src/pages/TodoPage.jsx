@@ -19,9 +19,9 @@ function TodoPage(){
         setTasks(tasks.map(task => task.id === id ? {...task, completed: !task.completed} : task));
     }
 
-    // const updateTaskText = (id) => {
-
-    // }
+    const updateTaskText = (id, newText) => {
+        setTasks(tasks.map(task => task.id === id ? {...task, text: newText} : task))
+    }
 
     const deleteTask = (id) => {
         setTasks(tasks.filter(task => task.id !== id));
@@ -41,7 +41,7 @@ function TodoPage(){
                 <input type="text" name="taskInput" className="add-todo" placeholder="Add a new task"/>
                 <button type="submit">Add</button>
             </form>
-            <TodoList tasks={filteredTasks} changeTaskCompletion={changeTaskCompletion} deleteTask={deleteTask}/>
+            <TodoList tasks={filteredTasks} changeTaskCompletion={changeTaskCompletion} deleteTask={deleteTask} updateTaskText={updateTaskText}/>
         </div>
     )
 }
