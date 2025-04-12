@@ -1,6 +1,7 @@
 import { useState } from "react";
 import TodoList from "../components/ToDoList";
 import Filter from "../components/Filter";
+import DashBoard from "../components/DashBoard";
 
 function TodoPage(){
     const [tasks, setTasks] = useState([]);
@@ -27,15 +28,27 @@ function TodoPage(){
         setTasks(tasks.filter(task => task.id !== id));
     }
 
+    // filtering tasks based on the selected filter in Filter component
     const filteredTasks = tasks.filter(task => {
-        if(filter === 'Active') return !task.completed;
-        if(filter === 'Completed') return task.completed;
+        if(filter === 'Active') return task.completed === false;
+        if(filter === 'Completed') return task.completed === true;
         return true;
     })
+
+    const getActiveTasksCount = () => {
+        const activeTasks = tasks.filter(task => task.completed === false);
+        return activeTasks.length;
+    }
+
+    const getCompletedTasksCount = () => {
+        const completedTasks = tasks.filter(task => task.completed === true);
+        return completedTasks.length;
+    }
 
     return(
         <div>
             <h1>To-Do Application</h1>
+            <DashBoard getActiveTasksCount={getActiveTasksCount} getCompletedTasksCount={getCompletedTasksCount}/>
             <Filter filter={filter} setFilter={setFilter}/>
             <form onSubmit={addTask} className="add-todo-form">
                 <input type="text" name="taskInput" className="add-todo" placeholder="Add a new task"/>
