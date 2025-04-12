@@ -10,6 +10,7 @@ function TodoPage(){
         const taskText = e.target.elements.taskInput.value;
         if(taskText){
             setTasks([...tasks, {id: Date.now(), text: taskText, completed: false}]);
+            e.target.reset();
         }
     }
 
@@ -30,9 +31,9 @@ function TodoPage(){
     return(
         <div>
             <h1>To-Do Application</h1>
-            <Filter filter={filter} setFilter={setFilter}/>
+            {/* <Filter filter={filter} setFilter={setFilter}/> */}
             <form onSubmit={addTask} className="add-todo-form">
-                <input type="text" className="add-todo" placeholder="Add a new task"/>
+                <input type="text" name="taskInput" className="add-todo" placeholder="Add a new task"/>
                 <button type="submit">Add</button>
             </form>
             <TodoList tasks={filteredTasks} changeTaskCompletion={changeTaskCompletion} deleteTask={deleteTask}/>
