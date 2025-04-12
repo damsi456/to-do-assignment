@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TodoList from "../components/ToDoList";
+import Filter from "../components/Filter";
 
 function TodoPage(){
     const [tasks, setTasks] = useState([]);
@@ -18,6 +19,10 @@ function TodoPage(){
         setTasks(tasks.map(task => task.id === id ? {...task, completed: !task.completed} : task));
     }
 
+    // const updateTaskText = (id) => {
+
+    // }
+
     const deleteTask = (id) => {
         setTasks(tasks.filter(task => task.id !== id));
     }
@@ -31,7 +36,7 @@ function TodoPage(){
     return(
         <div>
             <h1>To-Do Application</h1>
-            {/* <Filter filter={filter} setFilter={setFilter}/> */}
+            <Filter filter={filter} setFilter={setFilter}/>
             <form onSubmit={addTask} className="add-todo-form">
                 <input type="text" name="taskInput" className="add-todo" placeholder="Add a new task"/>
                 <button type="submit">Add</button>
