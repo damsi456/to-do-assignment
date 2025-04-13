@@ -9,13 +9,13 @@ function HomePage () {
         <p>Organize your tasks, boost your productivity, and never miss a deadline.</p>
         <div className="welcome-links">
           <button 
-            className="welcome-btn login-btn" 
+            className="login-btn" 
             onClick={() => navigate("/login")}
           >
             Log In
           </button>
           <button 
-            className="welcome-btn register-btn" 
+            className="register-btn" 
             onClick={() => navigate("/register")}
           >
             Sign Up

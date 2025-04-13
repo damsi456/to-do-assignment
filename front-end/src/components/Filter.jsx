@@ -1,9 +1,10 @@
 function Filter({filter, setFilter}){
     return(
         <div className="filter-buttons">
-            <button onClick={() => setFilter("All")} disabled={filter === 'All'}>All</button>
-            <button onClick={() => setFilter("Active")} disabled={filter === 'Active'}>Active</button>
-            <button onClick={() => setFilter("Completed")} disabled={filter === 'Completed'}>Completed</button>
+            <button onClick={() => setFilter("All")} className={filter === 'All' ? 'active' : ''}>All</button>
+            <button onClick={() => setFilter("Active")} className={filter === 'Active' ? 'active' : ''}>Active</button>
+            <button onClick={() => setFilter("Completed")} className
+            ={filter === 'Completed' ? 'active' : ''}>Completed</button>
         </div>
     )
 }

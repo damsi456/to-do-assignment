@@ -9,7 +9,7 @@ function LoginPage (){
     const handleLogin = async (e) => {
         e.prevetDefault();
         try{
-            const response = await axios.post("placeholdingapi", {
+            await axios.post("placeholdingapi", {
                 username,
                 password
             });

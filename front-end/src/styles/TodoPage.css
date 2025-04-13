@@ -1,0 +1,154 @@
+.todos-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.dashboard {
+    margin-bottom: 1rem;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.filter-buttons button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #565656;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-buttons button:hover {
+    background-color: rgb(26, 35, 106);
+    color: white;
+}
+
+.filter-buttons button.active {
+    background-color: rgb(13, 18, 57);
+    color: white;
+    border-color: rgb(30, 41, 128);
+}
+
+.todo-form {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.add-todo {
+    flex: 1;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.todo-form button {
+    padding: 0.5rem 1rem;
+    background-color: rgb(13, 18, 57);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #e0e0e0;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.todo-form button:hover {
+    background-color: rgb(26, 35, 106);
+}
+
+
+.todo-list {
+    width: 100%; 
+}
+
+.todo-list > h2{
+    margin-bottom: 1rem;
+}
+
+.todo-list > ul{
+    list-style: none; 
+}
+
+.todo-list li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+li input[type=checkbox] {
+    transform: scale(1.2);
+    width: 16px;
+    accent-color: #ffffff;
+}
+
+li span, li input[type=text] {
+    flex: 1;
+    margin-left: 1rem;
+}
+
+li input[type=text] {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: none;
+}
+
+li span {
+    cursor: pointer;
+}
+
+li button {
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    padding: 0.3rem 0.6rem;
+    margin-left: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+li .save-btn {
+    background-color: #ffffff;
+    color: #1e1e1e;
+}
+
+li .save-btn:hover {
+    background-color: #e3e3e3;
+}
+
+li .danger-btn {
+    background-color: #f44336;
+}
+
+li .danger-btn:hover {
+    background-color: #b12c29;
+}

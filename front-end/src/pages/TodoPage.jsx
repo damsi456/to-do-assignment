@@ -1,3 +1,4 @@
+import '../styles/TodoPage.css'
 import { useState } from "react";
 import TodoList from "../components/ToDoList";
 import Filter from "../components/Filter";
@@ -46,11 +47,11 @@ function TodoPage(){
     }
 
     return(
-        <div>
+        <div className="todos-container">
             <h1>To-Do Application</h1>
             <DashBoard getActiveTasksCount={getActiveTasksCount} getCompletedTasksCount={getCompletedTasksCount}/>
             <Filter filter={filter} setFilter={setFilter}/>
-            <form onSubmit={addTask} className="add-todo-form">
+            <form onSubmit={addTask} className="todo-form">
                 <input type="text" name="taskInput" className="add-todo" placeholder="Add a new task"/>
                 <button type="submit">Add</button>
             </form>
