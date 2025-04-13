@@ -1,27 +1,26 @@
+import '../styles/HomePage.css'
 import { useNavigate } from "react-router-dom";
 
 function HomePage () {
     const navigate = useNavigate()
     return(
     <div className="welcome-container">
-      <div className="welcome-content">
         <h1>Let's add your todos!</h1>
         <p>Organize your tasks, boost your productivity, and never miss a deadline.</p>
         <div className="welcome-links">
-          <button 
+            <button 
             className="login-btn" 
             onClick={() => navigate("/login")}
-          >
+            >
             Log In
-          </button>
-          <button 
+            </button>
+            <button 
             className="register-btn" 
             onClick={() => navigate("/register")}
-          >
+            >
             Sign Up
-          </button>
+            </button>
         </div>
-      </div>
     </div>
     )
 }
