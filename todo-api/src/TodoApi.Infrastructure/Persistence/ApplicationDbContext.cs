@@ -19,6 +19,8 @@ namespace TodoApi.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>().HasIndex(u => u.Auth0Id).IsUnique();
         }
     }
 }

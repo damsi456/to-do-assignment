@@ -27,7 +27,8 @@ namespace TodoApi.Application.Services
             return new UserDto {
                 Id = user.Id,
                 Username = user.Username,
-                Email = user.Email
+                Email = user.Email,
+                Auth0Id = user.Auth0Id
             };
         }
 
@@ -38,16 +39,25 @@ namespace TodoApi.Application.Services
             return new UserDto {
                 Id = user.Id,
                 Username = user.Username,
-                Email = user.Email
+                Email = user.Email,
+                Auth0Id = user.Auth0Id
             };
         }
 
-        public async Task<UserDto> CreateAsync(CreateUserDto dto)
+        public async Task<UserDto?> CreateAsync(CreateUserDto dto)
         {
+            var existingUser = await _repo.GetByAuth0IdAsync(dto.Auth0Id);
+
+            if (existingUser != null)
+            {
+                return null;
+            }
+            
             var user = new User
             {
                 Username = dto.Username,
-                Email = dto.Email
+                Email = dto.Email,
+                Auth0Id = dto.Auth0Id
             };
 
             await _repo.AddAsync(user);
@@ -56,7 +66,8 @@ namespace TodoApi.Application.Services
             {
                 Id = user.Id,
                 Username = user.Username,
-                Email = user.Email
+                Email = user.Email,
+                Auth0Id = user.Auth0Id
             };
         }
 
@@ -67,6 +78,7 @@ namespace TodoApi.Application.Services
 
             user.Username = dto.Username;
             user.Email = dto.Email;
+            user.Auth0Id = dto.Auth0Id;
             await _repo.UpdateAsync(user);
             return true;
         }

@@ -1,5 +1,6 @@
-import '../styles/TodoPage.css'
-import { useState } from "react";
+import '../styles/TodoPage.css';
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import TodoList from "../components/ToDoList";
 import Filter from "../components/Filter";
@@ -9,6 +10,25 @@ function TodoPage(){
     const [tasks, setTasks] = useState([]);
     const [filter, setFilter] = useState('All');
     const { logout } = useAuth0();
+    const { user, isAuthenticated } = useAuth0();
+
+    // sends user data to backend if autheticated
+    useEffect(() => {
+        const syncUser = async () => {
+            if (isAuthenticated && user) {
+                try {
+                    await axios.post("http://localhost:5297/api/users", {
+                      username: user.name || user.nickname ,
+                      email: user.email,
+                      auth0Id: user.sub
+                    });
+                  } catch (err) {
+                    console.error("Failed to sync user:", err);
+                  }
+            }
+        };
+        syncUser();
+    }, [isAuthenticated, user]);
 
     const addTask = (e) => {
         e.preventDefault();

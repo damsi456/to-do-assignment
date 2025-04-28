@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using TodoApi.Application.DTOs;
 using TodoApi.Application.Interfaces;
@@ -9,7 +10,7 @@ using TodoApi.Application.Interfaces;
 namespace TodoApi.API.Controllers
 {
     [ApiController]
-    [Route("api/users/")]
+    [Route("api/users")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _service;
@@ -39,6 +40,7 @@ namespace TodoApi.API.Controllers
         public async Task<IActionResult> CreateUser([FromBody]CreateUserDto dto)
         {
             var user = await _service.CreateAsync(dto);
+            if (user == null) return BadRequest("A user exists with same auth0Id.");
             return CreatedAtAction(nameof(GetUserbyId), new {id = user.Id}, user);
         }
 

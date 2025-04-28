@@ -12,6 +12,7 @@ namespace TodoApi.Domain.Entities
         [Required]
         public string Username { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public string Auth0Id { get; set; } = string.Empty;
         public List<TaskItem> Tasks { get; set; } = new List<TaskItem>();
     }
 }

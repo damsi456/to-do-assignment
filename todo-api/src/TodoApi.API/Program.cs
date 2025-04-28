@@ -41,6 +41,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Add Cors
+app.UseCors(policy => policy
+    .AllowAnyOrigin()
+    .AllowAnyHeader()
+    .AllowAnyMethod());
+
+builder.Services.AddCors();
+
 app.UseHttpsRedirection();
 
 // Ensure controller routes are mapped

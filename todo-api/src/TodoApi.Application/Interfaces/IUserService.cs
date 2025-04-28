@@ -10,7 +10,7 @@ namespace TodoApi.Application.Interfaces
     {
         Task<UserDto?> GetByIdAsync(int id);
         Task<UserDto?> GetByEmailAsync(string email);
-        Task<UserDto> CreateAsync(CreateUserDto dto);
+        Task<UserDto?> CreateAsync(CreateUserDto dto);
         Task<bool> UpdateAsync(int id,  CreateUserDto dto);
         Task<bool> DeleteAsync(int id); 
     }
