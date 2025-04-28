@@ -18,7 +18,7 @@ namespace TodoApi.Application.Services
             _repo = repo;
         }
 
-        public async Task<TaskItemDto> GetByIdAsync(int id)
+        public async Task<TaskItemDto?> GetByIdAsync(int id)
         {
             var t = await _repo.GetByIdAsync(id);
             if (t == null)

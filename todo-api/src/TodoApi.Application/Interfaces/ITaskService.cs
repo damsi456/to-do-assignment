@@ -13,5 +13,6 @@ namespace TodoApi.Application.Interfaces
         Task<TaskItemDto> CreateAsync(CreateTaskItemDto dto);
         Task<bool> UpdateAsync(int id, UpdateTaskItemDto dto);
         Task<bool> DeleteAsync(int id); 
+        Task<IEnumerable<TaskItemDto>> GetFilteredTasksAsync(int userId, bool status);
     }
 }

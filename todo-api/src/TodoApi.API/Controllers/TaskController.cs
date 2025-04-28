@@ -9,7 +9,7 @@ using TodoApi.Application.Interfaces;
 namespace TodoApi.API.Controllers
 {
     [ApiController]
-    [Route("api/tasks")]
+    [Route("api/tasks/")]
     public class TaskController : ControllerBase
     {
         private readonly ITaskService _service;
@@ -50,11 +50,18 @@ namespace TodoApi.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteTask(int id)
         {
             var deleted = await _service.DeleteAsync(id);
             if (!deleted) return NotFound();
             return NoContent();
         }       
+
+        [HttpGet("/filter/{uid}/{status}")]
+        public async Task<IActionResult> GetFilteredTasks(int uid, bool status) 
+        {
+            var filteredTasks = await _service.GetFilteredTasksAsync(uid, status);
+            return Ok(filteredTasks);
+        }
     }
 }
