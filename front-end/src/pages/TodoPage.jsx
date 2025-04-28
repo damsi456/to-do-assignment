@@ -1,5 +1,6 @@
 import '../styles/TodoPage.css'
 import { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import TodoList from "../components/ToDoList";
 import Filter from "../components/Filter";
 import DashBoard from "../components/DashBoard";
@@ -7,6 +8,7 @@ import DashBoard from "../components/DashBoard";
 function TodoPage(){
     const [tasks, setTasks] = useState([]);
     const [filter, setFilter] = useState('All');
+    const { logout } = useAuth0();
 
     const addTask = (e) => {
         e.preventDefault();
@@ -48,7 +50,12 @@ function TodoPage(){
 
     return(
         <div className="todos-container">
-            <h1>To-Do Application</h1>
+            <div className="todos-header">
+                <h1>To-Do Application</h1>
+                <button className="logout-btn" onClick={() => logout({ logoutParams: { returnTo: "http://localhost:5173/" } })}>
+                    Log Out
+                </button>
+            </div>
             <DashBoard getActiveTasksCount={getActiveTasksCount} getCompletedTasksCount={getCompletedTasksCount}/>
             <Filter filter={filter} setFilter={setFilter}/>
             <form onSubmit={addTask} className="todo-form">
