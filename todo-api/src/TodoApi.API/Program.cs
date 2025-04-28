@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using TodoApi.Application.Interfaces;
+using TodoApi.Application.Services;
 using TodoApi.Infrastructure.Persistence;
 using TodoApi.Infrastructure.Repositories;
 
@@ -20,6 +21,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Tells to provide an instance of TaskRepository when ITaskRepository is requested.
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+// Add Task service
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 builder.Services.AddControllers();
 
