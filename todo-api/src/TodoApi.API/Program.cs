@@ -23,6 +23,8 @@ builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 // Add Task service
 builder.Services.AddScoped<ITaskService, TaskService>();
+// Add User service
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddControllers();
 

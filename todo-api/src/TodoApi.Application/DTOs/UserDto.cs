@@ -12,6 +12,7 @@ namespace TodoApi.Application.DTOs
         public string Username { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
     }
+    // For creation
     public class CreateUserDto
     {
         public string Username { get; set; } = string.Empty;
