@@ -34,7 +34,7 @@ namespace TodoApi.Tests.Services
             // Assert
             Assert.NotNull(dto);
             Assert.Equal(5, dto.Id);
-            Assert.Equal("joe", dto.Username);
+            Assert.Equal("damsi", dto.Username);
         }
 
         [Fact]
