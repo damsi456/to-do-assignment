@@ -37,7 +37,7 @@ dotnet ef database update
 dotnet run
 ```
 
-Swagger UI (Development): https://localhost:5001/swagger/index.html
+Swagger UI: https://localhost:5001/swagger/index.html
 
 ---
 
