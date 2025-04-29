@@ -46,6 +46,18 @@ namespace TodoApi.Application.Services
             });
         }
 
+        public async Task<IEnumerable<TaskItemDto>> GetByUserIdAsync(int userId)
+        {
+            var tasks = await _repo.GetByUserIdAsync(userId);
+            return tasks.Select(t => new TaskItemDto
+            {
+                Id = t.Id,
+                Title = t.Title,
+                IsCompleted = t.IsCompleted,
+                UserId = t.UserId
+            });
+        }
+
         public async Task<TaskItemDto> CreateAsync(CreateTaskItemDto dto)
         {
             var task = new TaskItem

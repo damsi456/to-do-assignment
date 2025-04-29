@@ -10,6 +10,7 @@ namespace TodoApi.Application.Interfaces
     {
         Task<TaskItemDto?> GetByIdAsync(int id);
         Task<IEnumerable<TaskItemDto>> GetAllAsync();
+        public Task<IEnumerable<TaskItemDto>> GetByUserIdAsync(int userId);
         Task<TaskItemDto> CreateAsync(CreateTaskItemDto dto);
         Task<bool> UpdateAsync(int id, UpdateTaskItemDto dto);
         Task<bool> DeleteAsync(int id); 

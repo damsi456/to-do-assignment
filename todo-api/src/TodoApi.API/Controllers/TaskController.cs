@@ -34,6 +34,13 @@ namespace TodoApi.API.Controllers
             return Ok(task);
         }
 
+        [HttpGet("uid/{uid}")]
+        public async Task<IActionResult> GetTaskByUserId(int uid)
+        {
+            var tasks = await _service.GetByUserIdAsync(uid);
+            return Ok(tasks);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateTask([FromBody] CreateTaskItemDto dto)
         {
@@ -57,7 +64,7 @@ namespace TodoApi.API.Controllers
             return NoContent();
         }       
 
-        [HttpGet("/filter/{uid}/{status}")]
+        [HttpGet("filter/{uid}/{status}")]
         public async Task<IActionResult> GetFilteredTasks(int uid, bool status) 
         {
             var filteredTasks = await _service.GetFilteredTasksAsync(uid, status);
