@@ -9,62 +9,120 @@ import DashBoard from "../components/DashBoard";
 function TodoPage(){
     const [tasks, setTasks] = useState([]);
     const [filter, setFilter] = useState('All');
+    const [uid, setUid] = useState(); 
     const { logout } = useAuth0();
     const { user, isAuthenticated } = useAuth0();
 
-    // sends user data to backend if autheticated
+    // Send user data to backend if autheticated
     useEffect(() => {
         const syncUser = async () => {
             if (isAuthenticated && user) {
                 try {
-                    await axios.post("http://localhost:5297/api/users", {
-                      username: user.name || user.nickname ,
+                    var response = await axios.post("http://localhost:5297/api/users", {
+                      username: user.name || user.nickname || user.email,
                       email: user.email,
                       auth0Id: user.sub
                     });
-                  } catch (err) {
-                    console.error("Failed to sync user:", err);
-                  }
+                    // debug
+                    console.log(response);
+                    setUid(response.data.id); // To be used to send requests
+                } catch (err) {
+                    console.error("Failed to send user:", err);
+                }
             }
         };
         syncUser();
     }, [isAuthenticated, user]);
 
-    const addTask = (e) => {
+    // Fetch user tasks based on the filter
+    useEffect(() => {
+        if (!uid) return;
+        const fetchTasks = async () => {
+            try {
+                if (filter === "All") {
+                    const res = await axios.get(`http://localhost:5297/api/tasks/uid/${uid}`);
+                    setTasks(res.data);
+                } else if (filter === "Active"){
+                    const res = await axios.get(`http://localhost:5297/api/tasks/filter/${uid}/false`);
+                    setTasks(res.data);
+                } else {
+                    const res = await axios.get(`http://localhost:5297/api/tasks/filter/${uid}/true`);
+                    setTasks(res.data);
+                }
+            } catch (err) {
+                console.error("Failed to fetch tasks:", err);
+            }
+        };
+        fetchTasks();
+    }, [uid, filter]);
+
+    const addTask = async (e) => {
         e.preventDefault();
         const taskText = e.target.elements.taskInput.value;
-        if(taskText){
-            setTasks([...tasks, {id: Date.now(), text: taskText, completed: false}]);
-            e.target.reset();
+        if(taskText && uid){
+            try {
+                const res = await axios.post("http://localhost:5297/api/tasks", {
+                    title: taskText,
+                    userId: uid
+                });
+                setTasks([...tasks, res.data]);
+                e.target.reset();
+            } catch (err) {
+                console.error("Failed to add task:", err);
+            }
         }
     }
 
-    const changeTaskCompletion = (id) => {
-        setTasks(tasks.map(task => task.id === id ? {...task, completed: !task.completed} : task));
+    const changeTaskCompletion = async (id) => {
+        const task = tasks.find(task => task.id === id);
+        try {
+            console.log("Task object:", task);
+            await axios.put(`http://localhost:5297/api/tasks/${id}`, {
+                title: task.title,
+                isCompleted: !task.isCompleted
+            });
+            console.log("Task object:", task);
+            // fetch again after updating task item
+            var res = await axios.get(`http://localhost:5297/api/tasks/uid/${uid}`);
+            setTasks(res.data);
+        } catch (err) {
+            console.error("Failed while updating task status:", err);
+        }
     }
 
-    const updateTaskText = (id, newText) => {
-        setTasks(tasks.map(task => task.id === id ? {...task, text: newText} : task))
+    const updateTaskText = async (id, newText) => {
+        const task = tasks.find(t => t.id === id);
+        try {
+            await axios.put(`http://localhost:5297/api/tasks/${id}`, {
+                title: newText,
+                isCompleted: task.isCompleted
+            });
+            // fetch again after updating task item
+            var res = await axios.get(`http://localhost:5297/api/tasks/uid/${uid}`);
+            setTasks(res.data);
+        } catch (err) {
+            console.error("Failed while updating task title:", err);
+        }
     }
 
-    const deleteTask = (id) => {
-        setTasks(tasks.filter(task => task.id !== id));
+    const deleteTask = async (id) => {
+        try {
+            await axios.delete(`http://localhost:5297/api/tasks/${id}`);
+            // fetch again after deleting task 
+            var res = await axios.get(`http://localhost:5297/api/tasks/uid/${uid}`);
+            setTasks(res.data);
+        } catch (err) {
+            console.error("Failed while deleting task:", err);
+        }
     }
-
-    // filtering tasks based on the selected filter in Filter component
-    const filteredTasks = tasks.filter(task => {
-        if(filter === 'Active') return task.completed === false;
-        if(filter === 'Completed') return task.completed === true;
-        return true;
-    })
 
     const getActiveTasksCount = () => {
-        const activeTasks = tasks.filter(task => task.completed === false);
+        const activeTasks = tasks.filter(task => task.isCompleted === false);
         return activeTasks.length;
     }
 
     const getCompletedTasksCount = () => {
-        const completedTasks = tasks.filter(task => task.completed === true);
+        const completedTasks = tasks.filter(task => task.isCompleted === true);
         return completedTasks.length;
     }
 
@@ -82,7 +140,7 @@ function TodoPage(){
                 <input type="text" name="taskInput" className="add-todo" placeholder="Add a new task"/>
                 <button type="submit">Add</button>
             </form>
-            <TodoList tasks={filteredTasks} changeTaskCompletion={changeTaskCompletion} deleteTask={deleteTask} updateTaskText={updateTaskText}/>
+            <TodoList tasks={tasks} changeTaskCompletion={changeTaskCompletion} deleteTask={deleteTask} updateTaskText={updateTaskText}/>
         </div>
     )
 }

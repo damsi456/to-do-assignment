@@ -50,7 +50,13 @@ namespace TodoApi.Application.Services
 
             if (existingUser != null)
             {
-                return null;
+                return new UserDto
+                {
+                    Id = existingUser.Id,
+                    Username = existingUser.Username,
+                    Email = existingUser.Email,
+                    Auth0Id = existingUser.Auth0Id
+                };
             }
             
             var user = new User

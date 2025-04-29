@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function TodoItem({task, changeTaskCompletion, deleteTask, updateTaskText}){
     const [isEditing, setIsEditing] = useState(false);
-    const [newText, setNewText] = useState(task.text);
+    const [newText, setNewText] = useState(task.title);
 
     const handleSave = () => {
         updateTaskText(task.id, newText);
@@ -10,7 +10,7 @@ function TodoItem({task, changeTaskCompletion, deleteTask, updateTaskText}){
     }
 
     const handleCancel = () => {
-        setNewText(task.text);
+        setNewText(task.title);
         setIsEditing(false);
     }
     
@@ -18,7 +18,7 @@ function TodoItem({task, changeTaskCompletion, deleteTask, updateTaskText}){
     <li>
         <input 
             type="checkbox"
-            checked={task.completed}
+            checked={task.isCompleted}
             onChange={() => changeTaskCompletion(task.id)} 
         />{
             isEditing ? 
@@ -29,9 +29,9 @@ function TodoItem({task, changeTaskCompletion, deleteTask, updateTaskText}){
                 </>
             : 
                 <>
-                <span style={{textDecoration: task.completed ? "line-through" : 'none',
-                    opacity: task.completed ? 0.3 : 1}}
-                onClick={() => setIsEditing(true)}>{task.text}</span> {/*should click to edit*/}
+                <span style={{textDecoration: task.isCompleted ? "line-through" : 'none',
+                    opacity: task.isCompleted ? 0.3 : 1}}
+                onClick={() => setIsEditing(true)}>{task.title}</span> {/*should click to edit*/}
                 <button onClick={() => deleteTask(task.id)} className="danger-btn">Delete</button>
                 </>
             
