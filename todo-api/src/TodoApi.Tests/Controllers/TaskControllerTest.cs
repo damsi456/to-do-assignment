@@ -26,6 +26,7 @@ namespace TodoApi.Tests.Controllers
         [Fact]
         public async Task GetTaskById_TaskExists()  
         {
+            // Arrage the cases and mock accordingly
             var dto = new TaskItemDto
             {
                 Id = 1,
@@ -35,8 +36,10 @@ namespace TodoApi.Tests.Controllers
             };
             _serviceMock.Setup(s => s.GetByIdAsync(1)).ReturnsAsync(dto);
 
+            // When
             var result = await _controller.GetTaskById(1);
 
+            // Then
             var ok = Assert.IsType<OkObjectResult>(result);
             Assert.Equal(dto, ok.Value);
         } 
@@ -54,7 +57,6 @@ namespace TodoApi.Tests.Controllers
         [Fact]
         public async Task GetAllTasks()
         {
-            // Arrage the cases and mock accordingly
             var taskDtos = new List<TaskItemDto>
             {
                 new TaskItemDto {Id = 1, Title = "Do Dishes", IsCompleted = false, UserId = 10 },
@@ -62,10 +64,8 @@ namespace TodoApi.Tests.Controllers
             };
             _serviceMock.Setup(s => s.GetAllAsync()).ReturnsAsync(taskDtos);
             
-            // When
             var result = await _controller.GetAllTasks();
         
-            // Then
             var ok = Assert.IsType<OkObjectResult>(result);
             Assert.Equal(taskDtos, ok.Value);
         }
