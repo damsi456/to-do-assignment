@@ -1,4 +1,4 @@
-# To‑Do Assignment
+# To‑Do Application
 
 A full‑stack to‑do list application with:
 - Front‑end: React + Vite + Auth0  
